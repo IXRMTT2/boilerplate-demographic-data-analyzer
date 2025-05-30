@@ -47,16 +47,12 @@ def calculate_demographic_data(print_data=True):
     )
 
     # What country has the highest percentage of people that earn >50K?
-    countrys = df['native-country'].value_counts()
-    rich_per_country = df[df['salary'] == '>50k']['native-country'].value_counts()
-    ratio = (rich_per_country / countrys) * 100
-    highest_earning_country = ratio.idxmax()
-    highest_earning_country_percentage = round(
-        ratio.max(), 1
-    )
+    country_counts = df['native-country'].value_counts()
+    rich_per_country = df[df['salary'] == '>50K']['native-country'].value_counts()
+    ratio = (rich_per_country / country_counts).fillna(0) * 100
 
     # Identify the most popular occupation for those who earn >50K in India.
-    india_wealth = df[(df['native-country'] == 'India') & (df['salary'] == '>50K)]')]
+    india_wealth = df[(df['native-country'] == 'India') & (df['salary'] == '>50K')]
 
     if india_wealth.empty:
         print("No matching rows for native-country = 'India' and salary = '>50K'")
