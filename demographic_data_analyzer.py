@@ -5,6 +5,10 @@ def calculate_demographic_data(print_data=True):
     # Read data from file
     df = pd.read_csv("adult.data.csv")
 
+    #Using this to clear the whitespace just incase
+    df['native-country'] = df['native-country'].str.strip()
+    df['salary'] = df['salary'].str.strip()
+
     # How many of each race are represented in this dataset? This should be a Pandas series with race names as the index labels.
     race_count = df['race'].value_counts()
 
