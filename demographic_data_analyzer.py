@@ -51,6 +51,13 @@ def calculate_demographic_data(print_data=True):
     rich_per_country = df[df['salary'] == '>50K']['native-country'].value_counts()
     ratio = (rich_per_country / country_counts).fillna(0) * 100
 
+    if not ratio.empty:
+        highest_earning_country = ratio.idxmax()
+        highest_earning_country_percentage = round(ratio.max(), 1)
+    else:
+        highest_earning_country = None
+        highest_earning_country_percentage = 0
+
     # Identify the most popular occupation for those who earn >50K in India.
     india_wealth = df[(df['native-country'] == 'India') & (df['salary'] == '>50K')]
 
