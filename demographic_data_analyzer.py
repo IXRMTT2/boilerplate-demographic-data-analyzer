@@ -8,6 +8,7 @@ def calculate_demographic_data(print_data=True):
     #Using this to clear the whitespace just incase
     df['native-country'] = df['native-country'].str.strip()
     df['salary'] = df['salary'].str.strip()
+    df['occupation'] = df['occupation'].str.strip()
 
     # How many of each race are represented in this dataset? This should be a Pandas series with race names as the index labels.
     race_count = df['race'].value_counts()
@@ -56,7 +57,15 @@ def calculate_demographic_data(print_data=True):
 
     # Identify the most popular occupation for those who earn >50K in India.
     india_wealth = df[(df['native-country'] == 'India') & (df['salary'] == '>50K)]')]
-    top_IN_occupation = india_wealth['occupation'].value_counts().idxmax()
+
+    if india_wealth.empty:
+        print("No matching rows for native-country = 'India' and salary = '>50K'")
+        print(df['native-country'].unique())
+        print(df['salary'].unique())
+        #welp just gna do this see if it works
+        top_IN_occupation = 'None',
+    else:
+        top_IN_occupation = india_wealth['occupation'].value_counts().idxmax()
 
     # DO NOT MODIFY BELOW THIS LINE
 
